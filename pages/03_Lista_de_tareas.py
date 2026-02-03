@@ -74,4 +74,21 @@ def lista_tareas():
     with col_elim_text:
         st.caption("Acción permanente.")
 
+
 lista_tareas()
+# --- SECCIÓN DESCARGAR CSV (Corregida para usuarios externos) ---
+st.write("") 
+
+# Convertimos el DataFrame a CSV en memoria (formato bytes)
+csv_data = df.to_csv(index=False).encode('utf-8')
+
+col_desc_1, col_desc_btn, col_desc_2 = st.columns([1, 1, 1])
+
+with col_desc_btn:
+    # Este es el componente correcto para que el navegador del usuario reciba el archivo
+    st.download_button(
+        label="Descargar CSV en mi equipo",
+        data=csv_data,
+        file_name=f"tareas_exportadas_{datetime.now().strftime('%Y%m%d')}.csv",
+        mime="text/csv",
+    )
