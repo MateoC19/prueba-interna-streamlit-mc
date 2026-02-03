@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import io
 from utils import cargar_datos
 from pathlib import Path
 from Interfaz import aplicar_estilo_oscuro
@@ -119,4 +120,22 @@ def pagina_graficas():
             fig.savefig(ruta, bbox_inches="tight", facecolor='#0e1117')
             st.success("Gráfica guardada en la carpeta datos")
 
+
 pagina_graficas()
+st.write("") 
+
+# 1. Guardar la gráfica en un "archivo virtual" en memoria
+buf = io.BytesIO()
+plt.savefig(buf, format="png", bbox_inches='tight', transparent=True)
+buf.seek(0)
+
+# 2. Botón de descarga para el usuario
+col_1, col_centro, col_2 = st.columns([1, 1, 1])
+
+with col_centro:
+    st.download_button(
+        label="Descargar Gráfica (PNG)",
+        data=buf,
+        file_name=f"grafica_{tipo_grafica.lower().replace(' ', '_')}.png",
+        mime="image/png"
+    )
