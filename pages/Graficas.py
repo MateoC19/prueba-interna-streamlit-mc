@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import io
+from datetime import datetime
 from utils import cargar_datos
 from Interfaz import aplicar_estilo_oscuro
 
@@ -77,3 +78,4 @@ def pagina_graficas():
 
 if __name__ == "__main__":
     pagina_graficas()
+
